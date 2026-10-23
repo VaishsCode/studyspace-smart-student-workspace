@@ -1,0 +1,34 @@
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask/SQLAlchemy Database
+# We ignore the local database to keep your private study data off GitHub
+study_script.db
+instance/
+
+# Virtual Environments
+# These folders are very large and should be recreated using requirements.txt
+venv/
+.venv/
+env/
+ENV/
+bin/
+lib/
+include/
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+Thumbs.db
+Desktop.ini
+
+# Log files
+*.log

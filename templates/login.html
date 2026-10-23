@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySpace - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--background); color: var(--text);">
+
+    <div style="background: var(--surface); padding: 35px; border-radius: 13px; border: 1px solid var(--border); width: 100%; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h1 style="text-align: center; font-size: 24px; margin-bottom: 20px;">Welcome Back 🚪</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; font-size: 13px; 
+                  background-color: {{ '#d4edda' if category == 'success' else '#f8d7da' }}; 
+                  color: {{ '#155724' if category == 'success' else '#721c24' }};">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="POST" style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px;">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--background); color: var(--text); outline: none;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px;">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--background); color: var(--text); outline: none;">
+            </div>
+            <button type="submit" class="primary-button" style="width: 100%; margin-top: 6px; cursor: pointer;">Log In</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 20px; font-size: 13px; color: var(--muted);">
+            New here? <a href="{{ url_for('signup') }}" style="color: var(--primary); font-weight: bold;">Sign up for free</a>
+        </p>
+    </div>
+
+</body>
+</html>

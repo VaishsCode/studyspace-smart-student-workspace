@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - StudyScript</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; color: #333; padding: 20px; }
+        .admin-container { max-width: 900px; margin: 0 auto; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 15px 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stats-grid { display: flex; gap: 20px; margin-bottom: 30px; }
+        .stat-card { flex: 1; padding: 20px; background: white; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .admin-table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        .admin-table th, .admin-table td { padding: 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        .admin-table th { background-color: #f1f1f1; }
+        .btn-danger { background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-back { background-color: #6c757d; color: white; border: none; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; }
+        .btn-back:hover { background-color: #5a6268; }
+    </style>
+</head>
+<body>
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h2>StudyScript Admin Hub 🛡️</h2>
+        <a href="{{ url_for('dashboard') }}" class="btn-back">← Back to Dashboard</a>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Registered Students</h3>
+            <h1 style="color: #007bff; font-size: 3rem; margin: 10px 0;">{{ total_users }}</h1>
+        </div>
+        <div class="stat-card">
+            <h3>Total Platform Assignments</h3>
+            <h1 style="color: #28a745; font-size: 3rem; margin: 10px 0;">{{ total_assignments }}</h1>
+        </div>
+    </div>
+
+    <h3 style="margin-bottom: 10px;">User Management</h3>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Account Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td><strong>{{ user.username }}</strong></td>
+                <td>
+                    {% if user.is_admin %}
+                        <span style="color: blue; font-weight: bold;">Admin</span>
+                    {% else %}
+                        Student
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not user.is_admin %}
+                    <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" onsubmit="return confirm('Warning: This will delete the student and all their academic data forever. Proceed?');" style="margin:0;">
+                        <button type="submit" class="btn-danger">Delete Account</button>
+                    </form>
+                    {% else %}
+                        <span style="color: gray; font-style: italic;">Protected</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
